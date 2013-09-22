@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+        </title>
+        <link rel="stylesheet" href="jquery.mobile-1.1.0.css" />
+        <link rel="stylesheet" href="my.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="jquery-1.7.1.js">
+        </script>
+        <script src="jquery.mobile-1.1.0.js">
+        </script>
+        <script type="text/javascript">
+            $('#content').bind('pagecreate', function () {
+                $.ajax({
+                    url: "http://localhost:8080/openemr/RestfulService?patients&callback=?",
+                    dataType: "json",
+                    error:function(x,e){handleAjaxError(x,e);},
+                    beforeSend:function(){$.mobile.showPageLoadingMsg();},
+                    complete:function(){
+                    	console.log("here!!!");
+                        $.mobile.hidePageLoadingMsg();
+                        $('[data-role="listview"]').listview('refresh'); //re-active all listview
+                    },
+                    success:function(data, textStatus, jqXHR){
+                        $('#playlist').find('[data-role="content"]').html(data);
+                    }
+                });
+            });
+            </script>
+    </head>
+    <body>
+        <div data-role="page" id="page1">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    OpenEMR Mobile
+                </h3>
+            </div>
+            <div data-role="content">
+            	
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <h3>
+                    Footer
+                </h3>
+            </div>
+        </div>
+        <script>
+            //App custom javascript
+        </script>
+    </body>
+    </html> 
